@@ -1,14 +1,25 @@
 import { NextResponse } from "next/server";
 
-const baseUrl = process.env.NEXT_PUBLIC_WC_URL!;
-const consumerKey = process.env.NEXT_PUBLIC_WC_KEY!;
-const consumerSecret = process.env.NEXT_PUBLIC_WC_SECRET!;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const url = `${baseUrl}/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_WC_URL!;
+    const key = process.env.NEXT_PUBLIC_WC_KEY!;
+    const secret = process.env.NEXT_PUBLIC_WC_SECRET!;
 
-  const res = await fetch(url, { cache: "no-store" });
-  const data = await res.json();
+    const res = await fetch(
+      `${baseUrl}/wp-json/wc/v3/products?status=publish&per_page=30&consumer_key=${key}&consumer_secret=${secret}`,
+      { cache: "no-store" }
+    );
 
-  return NextResponse.json(data);
+    if (!res.ok) throw new Error(`WooCommerce fetch failed: ${res.status}`);
+
+    const products = await res.json();
+    console.log(`✅ Woo returned ${products.length} products`);
+    return NextResponse.json(products);
+  } catch (error: any) {
+    console.error("❌ WooCommerce API error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

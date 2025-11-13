@@ -1,47 +1,57 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const categories = [
   {
     id: 1,
-    name: "Any 9 @ ₹499",
-    image: "/images/any9.jpg",
+    name: "Any 5 @ ₹499",
+    slug: "any-5-earrings",
+    image: "/images/any5.jpg",
   },
   {
     id: 2,
-    name: "Earrings",
-    image: "/images/rings.jpg",
+    name: "Any 9 @ ₹999",
+    slug: "any-9-earrings",
+    image: "/images/any9.jpg",
   },
   {
     id: 3,
-    name: "Finger Rings",
+    name: "Gift Box",
+    slug: "gift-box",
     image: "/images/finger.jpg",
   },
   {
     id: 4,
-    name: "NosePins",
+    name: "Earrings",
+    slug: "earrings",
     image: "/images/noseppin.jpg",
   },
   {
     id: 5,
-    name: "Any 5 @ ₹1500",
-    image: "/images/any5.jpg",
+    name: "Chain Pendants",
+    slug: "chain-pendant",
+    image: "/images/finger.jpg",
   },
   {
     id: 6,
-    name: "Mangtikka",
+    name: "Special Drops",
+    slug: "special-drops",
     image: "/images/tika.jpg",
   },
 ];
 
 export default function CategoryCarousel() {
+  const router = useRouter();
+
   return (
     <section className="w-full py-10">
       <div className="flex overflow-x-auto no-scrollbar justify-center gap-8 px-6">
         {categories.map((cat) => (
-          <div
+          <button
             key={cat.id}
-            className="flex flex-col items-center min-w-[120px]"
+            onClick={() => router.push(`/products/by-category/${cat.slug}`)} // ✅ redirect to category page
+            className="flex flex-col items-center min-w-[120px] focus:outline-none"
           >
             <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden shadow-md hover:scale-105 transition-all duration-300">
               <Image
@@ -55,7 +65,7 @@ export default function CategoryCarousel() {
             <p className="mt-2 text-sm md:text-base font-medium text-center">
               {cat.name}
             </p>
-          </div>
+          </button>
         ))}
       </div>
     </section>

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link"; // add at top
 import { useCart } from "@/context/CartContext";
 import { X } from "lucide-react";
 
@@ -52,9 +53,12 @@ export default function SideCart({
             <span>Total:</span>
             <span className="font-semibold">₹{totalPrice}</span>
           </div>
-          <button className="w-full bg-[#c22757] text-white py-2 rounded-full font-semibold hover:bg-[#a01e48] transition">
+          <Link
+            href="/checkout"
+            className="block text-center bg-[#c22757] text-white py-2 rounded-full font-semibold hover:bg-[#a01e48] transition"
+          >
             Checkout
-          </button>
+          </Link>
         </div>
       )}
     </div>
