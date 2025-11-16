@@ -18,7 +18,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-white text-gray-900 flex flex-col min-h-screen">
         <CartProvider>
           <Header />
-          <main className="flex-1 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+          <main className="flex-1 w-full">
+
             {children}
           </main>
           <Footer />
