@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";  // ← FIX FOR VERCEL BUILD
+
 import { useSearchParams } from "next/navigation";
 
 export default function SuccessPage() {
